@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="id" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Judul diubah sesuai konten baru -->
+    <title>Menjaga Ponsel Tetap Cepat: Panduan Kita</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Gaya dasar dipertahankan */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Latar belakang bersih */
+            min-height: 100vh;
+            color: #334155; 
+        }
+        
+        /* Tema Gelap */
+        .dark body {
+            background-color: #0f172a; /* Latar belakang gelap */
+            color: #cbd5e1;
+        }
+
+        /* Kontainer utama aplikasi */
+        .container {
+            background-color: #ffffff;
+            .dark & { background-color: #1e293b; }
+            border-radius: 1.5rem; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 1400px; 
+            margin: 2rem auto;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Header aplikasi */
+        .app-header {
+            background-color: #00796b; 
+            color: #ffffff;
+            padding: 1rem 1.5rem;
+            border-bottom: 4px solid #004d40;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .app-header { padding: 1.5rem 2.5rem; }
+        }
+        .app-header h1 {
+            font-size: 1.25rem; 
+            font-weight: 800;
+        }
+        @media (min-width: 768px) {
+            .app-header h1 { font-size: 1.75rem; }
+        }
+
+        /* Navigasi Dropdown Canggih */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #ffffff;
+            .dark & { background-color: #334155; }
+            min-width: 220px; /* Sedikit lebih lebar */
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            border-radius: 0.5rem;
+            z-index: 50;
+            overflow: hidden;
+            transform-origin: top right;
+            animation: scaleIn 0.2s ease-out;
+        }
+        .dropdown-content a {
+            color: #334155;
+            .dark & { color: #f1f5f9; }
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.875rem;
+            transition: background-color 0.2s ease;
+        }
+        .dropdown-content a:hover { 
+            background-color: #f1f5f9; 
+            .dark & { background-color: #475569; }
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Grid utama */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Default mobile */
+            gap: 1.5rem;
+            padding: 1rem 1.5rem 2.5rem 1.5rem;
+        }
+        @media (min-width: 1024px) {
+            .main-grid {
+                grid-template-columns: repeat(3, 1fr); /* Desktop */
+                padding: 1.5rem 2.5rem;
+            }
+        }
+        
+        /* Kolom */
+        .main-column { grid-column: span 1 / span 1; }
+        .sidebar-column { grid-column: span 1 / span 1; }
+        @media (min-width: 1024px) {
+            .main-column { grid-column: span 2 / span 2; }
+            .sidebar-column { grid-column: span 1 / span 1; position: sticky; top: 2rem; }
+        }
+        
+        /* Kartu Accordion */
+        .section-card {
+            background-color: #ffffff;
+            .dark & { background-color: #1e293b; }
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            .dark & { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1); }
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-4px); 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            .dark & { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.08); }
+        }
+        .section-card summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #004d40;
+            cursor: pointer;
+            list-style: none; 
+        }
+        .section-card summary::-webkit-details-marker { display: none; }
+        .section-card summary .icon { transition: transform 0.3s ease; }
+        .section-card[open] summary .icon { transform: rotate(180deg); }
+        
+        .section-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            .dark & { border-top-color: #334155; }
+        }
+        .section-content p, .section-content ul {
+            margin-bottom: 1rem;
+            line-height: 1.7; 
+            color: #475569;
+            .dark & { color: #cbd5e1; }
+        }
+         .section-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00796b;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .section-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+
+        /* Segmented Control (Untuk Fakta Singkat/Tips Kunci) */
+        .segmented-control {
+            display: flex;
+            flex-direction: column; /* Mobile */
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        @media (min-width: 640px) {
+            .segmented-control {
+                flex-direction: row; /* Tablet+ */
+                background-color: #e2e8f0;
+                .dark & { background-color: #0f172a; }
+                border-radius: 0.75rem;
+                padding: 0.25rem;
+            }
+        }
+        .segment-btn {
+            flex: 1;
+            padding: 0.75rem 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #475569;
+            .dark & { color: #94a3b8; }
+            border-radius: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .segment-btn:hover {
+            background-color: #f1f5f9;
+            .dark & { background-color: #1e293b; }
+        }
+        .segment-btn.active {
+            background-color: #ffffff;
+            .dark & { background-color: #334155; }
+            color: #00796b;
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        /* Mengganti nama class pane */
+        .tip-pane {
+            display: none; 
+            animation: fadeIn 0.5s ease;
+        }
+        .tip-pane.active {
+            display: block;
+        }
+        
+        /* Kartu Tips Kunci */
+        .tip-item { /* Mengganti nama class */
+            display: flex;
+            align-items: flex-start;
+            background-color: #ffffff;
+            .dark & { background-color: #334155; }
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            .dark & { border-color: #475569; }
+        }
+        .tip-item .icon-tip { /* Mengganti nama class */
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+            background-color: #e0f2f7; /* Biru muda */
+            color: #0077c2; /* Biru */
+        }
+        
+        .tip-item .tip-title { /* Mengganti nama class */
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1e293b;
+            .dark & { color: #f1f5f9; }
+        }
+        .tip-item .tip-explanation { /* Mengganti nama class */
+            font-size: 0.9rem;
+            color: #475569;
+            .dark & { color: #cbd5e1; }
+            margin-top: 0.25rem;
+            line-height: 1.6;
+        }
+         /* Kartu Top 3 Penyebab */
+        .culprit-card {
+            background-color: #fffbeb; /* Kuning muda */
+            .dark & { background-color: #3b322a; } /* Coklat gelap */
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid #fef3c7; /* Kuning lebih terang */
+            .dark & { border-color: #78350f; } /* Coklat */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-top: 1.5rem; /* Jarak dari atas */
+        }
+        .culprit-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #b45309; /* Coklat oranye */
+            .dark & { color: #fcd34d; } /* Kuning cerah */
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+         .culprit-card h3 i {
+             margin-right: 0.5rem;
+         }
+        .culprit-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .culprit-card li {
+            font-size: 0.95rem;
+            color: #475569;
+            .dark & { color: #cbd5e1; }
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+         .culprit-card li i {
+             margin-right: 0.75rem;
+             color: #ca8a04; /* Kuning gelap */
+             .dark & { color: #facc15; } /* Kuning cerah */
+             flex-shrink: 0;
+         }
+
+        /* Floating Action Button (FAB) */
+        .fab {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background-color: #00796b;
+            color: white;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 121, 107, 0.3);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        .fab:hover {
+            background-color: #004d40;
+            transform: scale(1.1) translateY(-4px); 
+            box-shadow: 0 15px 25px rgba(0, 121, 107, 0.4);
+        }
+
+        /* Tooltip */
+        #tooltip {
+            position: absolute;
+            display: none; 
+            background-color: #1e293b;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 200;
+            pointer-events: none; 
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Animasi */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .animate-fade-in { animation: fadeIn 0.8s ease-out; }
+        .animate-slide-in-up { animation: slideInUp 0.8s ease-out; }
+    </style>
+</head>
+<body class="dark:bg-bg-dark"> 
+    
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-cyan-50 to-teal-100 dark:from-slate-900 dark:to-teal-950"></div>
+    </div>
+    
+    <div id="tooltip"></div>
+
+    <!-- FAB diubah ikon dan link -->
+    <a href="#solusi" id="fab" class="fab">
+        <i class="fas fa-rocket fa-lg"></i> <!-- Ikon roket -->
+    </a>
+
+    <div class="container animate-fade-in">
+        <header class="app-header">
+            <!-- Judul diubah -->
+            <h1 class="animate-slide-in-up" style="animation-delay: 100ms;">Menjaga Ponsel Tetap Cepat: Panduan Kita</h1>
+            
+            <div class="dropdown animate-slide-in-up" style="animation-delay: 200ms;">
+                <button class="text-white p-2 rounded-full hover:bg-white/20 transition-colors">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+                <!-- Teks menu diubah -->
+                <div class="dropdown-content">
+                    <a href="#pendahuluan"><i class="fas fa-flag-checkered fa-fw mr-2"></i>Kenapa Ponsel Melambat?</a>
+                    <a href="#penyebab"><i class="fas fa-search fa-fw mr-2"></i>Biang Keroknya Apa Saja?</a>
+                    <a href="#solusi"><i class="fas fa-tools fa-fw mr-2"></i>Solusi Praktis Agar Ngebut Lagi</a>
+                    <a href="#pustaka"><i class="fas fa-link fa-fw mr-2"></i>Sumber Referensi</a>
+                    <hr class="border-gray-200 dark:border-gray-600 my-1">
+                    <a href="#tips-kunci"><i class="fas fa-key fa-fw mr-2"></i>Tips Kunci Performa</a>
+                    <a href="#top-penyebab"><i class="fas fa-exclamation-triangle fa-fw mr-2"></i>Top 3 Penyebab Lambat</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-grid">
+            
+            <div class="main-column animate-slide-in-up" style="animation-delay: 300ms;">
+                
+                <!-- Konten diganti total -->
+                <details class="section-card" open id="pendahuluan">
+                    <summary>
+                        Kenapa Sih Ponsel Kita Melambat?
+                        <i class="fas fa-chevron-down icon"></i>
+                    </summary>
+                    <div class="section-content">
+                        <h3>Awalnya Ngebut, Kok Jadi Lemot?</h3>
+                        <p>Ingat rasanya saat pertama kali pegang ponsel baru? Cepat, responsif, buka aplikasi sat-set! Tapi, seiring waktu, rasanya jadi beda. Buka aplikasi ada jeda, scrolling patah-patah. Ini bukan cuma perasaan, lho. Ini nyata dan dialami banyak orang.</p>
+                        <p>Performa puncak itu bukan cuma soal angka di aplikasi benchmark. Ini soal pengalaman: seberapa cepat ponsel merespons sentuhan kita (responsivitas), seberapa mulus animasinya (kelancaran), dan seberapa lama ia bisa bertahan cepat (daya tahan).</p>
+                    </div>
+                </details>
+
+                <details class="section-card" id="penyebab">
+                    <summary>
+                        Siapa Saja Biang Keroknya?
+                        <i class="fas fa-chevron-down icon"></i>
+                    </summary>
+                    <div class="section-content">
+                        <p>Ponsel melambat itu penyebabnya kompleks, seperti detektif yang harus mengurai banyak petunjuk. Mari kita intip beberapa 'tersangka' utamanya:</p>
+                        <ul>
+                            <li><strong>Penyimpanan Penuh Sesak:</strong> Ibarat lemari yang kepenuhan, ponsel jadi susah 'bergerak' kalau memorinya hampir habis.</li>
+                            <li><strong>Aplikasi Bawaan (Bloatware):</strong> Kadang ada aplikasi bawaan pabrik yang jarang kita pakai tapi diam-diam makan sumber daya.</li>
+                            <li><strong>Proses Latar Belakang:</strong> Banyak aplikasi berjalan di belakang layar tanpa kita sadari, menyedot RAM dan baterai.</li>
+                            <li><strong>Cache Menumpuk:</strong> Cache itu data sementara agar aplikasi cepat dibuka. Tapi kalau terlalu banyak, malah bisa jadi beban.</li>
+                            <li><strong>Ponsel 'Kepanasan':</strong> Kalau dipakai terlalu berat, ponsel bisa panas dan otomatis menurunkan performanya biar nggak rusak.</li>
+                            <li><strong>RAM 'Berantakan':</strong> Seperti meja kerja yang penuh kertas, RAM yang terfragmentasi membuat ponsel sulit mencari data dengan cepat.</li>
+                            <li><strong>Pembaruan Sistem (Kadang):</strong> Update OS biasanya bagus, tapi kadang bisa juga membuat ponsel model lama terasa lebih berat.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details class="section-card" open id="solusi">
+                    <summary>
+                        Solusi Praktis Biar Ngebut Lagi!
+                        <i class="fas fa-chevron-down icon"></i>
+                    </summary>
+                    <div class="section-content">
+                        <p>Jangan buru-buru ganti ponsel! Ada banyak cara yang bisa kita coba agar si dia kembali gesit:</p>
+                        <h3>1. Mulai Ulang (Restart) Itu Ajaib!</h3>
+                        <p>Sederhana tapi ampuh. Restart membersihkan RAM dan menghentikan proses latar belakang yang bandel. Coba lakukan rutin, misal seminggu sekali.</p>
+                        <h3>2. Rapi-Rapi Aplikasi</h3>
+                        <ul>
+                            <li><strong>Hapus yang Tak Terpakai:</strong> Jujur deh, berapa banyak aplikasi yang cuma 'numpang' di ponsel kita? Hapus saja!</li>
+                            <li><strong>Nonaktifkan Bloatware:</strong> Aplikasi bawaan yang nggak bisa dihapus? Coba nonaktifkan (disable) dari Pengaturan.</li>
+                            <li><strong>Update Aplikasi:</strong> Pengembang sering merilis update untuk perbaikan performa. Jangan malas update, ya!</li>
+                        </ul>
+                         <h3>3. Atur Penyimpanan dengan Bijak</h3>
+                        <ul>
+                            <li><strong>Bersihkan 'Sampah':</strong> Hapus foto, video, atau file unduhan yang sudah tidak perlu.</li>
+                            <li><strong>Manfaatkan Cloud:</strong> Pindahkan foto/video ke Google Photos, Google Drive, atau layanan cloud lainnya.</li>
+                            <li><strong>Bersihkan Cache (Secukupnya):</strong> Sesekali membersihkan cache aplikasi boleh saja, terutama jika ada aplikasi yang bermasalah. Tapi jangan terlalu sering, nanti malah bikin lambat saat buka aplikasi lagi.</li>
+                        </ul>
+                         <h3>4. Kontrol Proses Latar Belakang</h3>
+                         <p>Cek di Pengaturan Baterai atau Memori, aplikasi mana saja yang boros sumber daya di latar belakang. Batasi jika perlu.</p>
+                         <h3>5. Update Sistem Operasi</h3>
+                         <p>Selalu update OS ke versi terbaru (jika tersedia) untuk mendapatkan fitur keamanan dan optimalisasi performa terkini.</p>
+                         <h3>6. Tips Tambahan (Sedikit Advance)</h3>
+                         <ul>
+                             <li><strong>Opsi Pengembang:</strong> Ada pengaturan tersembunyi seperti 'Skala Animasi' yang bisa dipercepat atau dimatikan. Tapi hati-hati, ya!</li>
+                             <li><strong>Keamanan:</strong> Pastikan ponsel bebas malware. Gunakan aplikasi keamanan terpercaya dan unduh aplikasi hanya dari sumber resmi.</li>
+                             <li><strong>RAM Tambahan?</strong> Fitur seperti Extended RAM bisa sedikit membantu, tapi jangan terlalu berharap banyak. RAM fisik tetap lebih utama.</li>
+                         </ul>
+                    </div>
+                </details>
+
+                 <details class="section-card" id="pustaka">
+                    <summary>
+                        Sumber Referensi Kita
+                        <i class="fas fa-chevron-down icon"></i>
+                    </summary>
+                    <div class="section-content">
+                        <!-- Konten Pustaka dari PDF baru -->
+                        <ul style="font-size: 0.8rem; line-height: 1.4; list-style-type: decimal; color: #64748b;" class="dark:text-gray-500">
+                           <li>Perbedaan Refresh Rate 60 Hz, 90 Hz, dan 120 Hz - Kompas.com</li>
+                            <li>Apa yang Dimaksud dengan Bloatware? - Avast</li>
+                            <li>Apa itu Bloatware & Cara Menghapusnya dari Perangkat Anda - Norton</li>
+                            <li>Apa Itu Cache, Fungsi, dan Cara Membersihkannya - Niagahoster</li>
+                            <li>Kenali Tanda HP Android Kena Virus dan Cara Mengatasinya - CNN Indonesia</li>
+                            <li>What Does Throttling My Phone Mean? - Asurion</li>
+                            <li>Thermal Throttling - an overview | ScienceDirect Topics</li>
+                            <li>How RAM Works - HowStuffWorks</li>
+                            <li>Apa Itu Fragmentasi Memori? - Technopedia</li>
+                            <li>Tips dan Trik Performa Android - Android Developers</li>
+                            <li>Restart Ponsel Anda - Bantuan Google Pixel</li>
+                            <li>Menghapus, menonaktifkan & mengelola aplikasi yang tidak digunakan di Android - Bantuan Google Play</li>
+                            <li>Memperbarui aplikasi Android - Bantuan Google Play</li>
+                            <li>Mengosongkan ruang penyimpanan - Bantuan File by Google</li>
+                            <li>Cara mencadangkan atau memulihkan data di perangkat Android - Bantuan Akun Google</li>
+                            <li>Membersihkan histori, cache & cookie browser - Bantuan Google Chrome</li>
+                            <li>Menampilkan penggunaan memori - Bantuan Android</li>
+                            <li>Memeriksa & mengupdate versi Android - Bantuan Android</li>
+                            <li>Mengonfigurasi opsi developer di perangkat - Bantuan Android</li>
+                            <li>Apa itu Keamanan Seluler? Manfaat, Ancaman, dan Praktik Terbaik - Kaspersky</li>
+                            <li>Cara Membersihkan Virus di HP Android dengan Mudah dan Efektif... - KapanLagi.com</li>
+                            <li>Panduan keamanan | Security - Android Developers</li>
+                            <li>Cara Menambah RAM Di Android Tanpa Root - Bid TIK Polda Kepri</li>
+                            <li>Apa Itu Fitur Extended RAM? Yuk Ketahui Cara Kerjanya - Eraspace</li>
+                            <li>Extended RAM pada HP: Meningkatkan Kinerja atau Sekadar Gimmick? - Planet Gadget</li>
+                            {/* Tambahkan referensi lain jika perlu */}
+                        </ul>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="sidebar-column animate-slide-in-up" style="animation-delay: 500ms;">
+                
+                <!-- Diubah menjadi Tips Kunci Performa -->
+                <div class="section-card" id="tips-kunci">
+                    <summary style="background-color: #ffffff; border-bottom: 1px solid #e0e0e0;" class="dark:bg-transparent dark:border-slate-700">
+                        Tips Kunci Performa
+                    </summary>
+                    <div class="section-content">
+                        <!-- Tombol Segmented Control diubah -->
+                        <div class="segmented-control">
+                            <button class="segment-btn active" data-target="pane-aplikasi">Aplikasi</button>
+                            <button class="segment-btn" data-target="pane-penyimpanan">Penyimpanan</button>
+                            <button class="segment-btn" data-target="pane-sistem">Sistem</button>
+                            <button class="segment-btn" data-target="pane-rutin">Rutin</button>
+                        </div>
+                        
+                        <!-- Pane 1: Aplikasi -->
+                        <div id="pane-aplikasi" class="tip-pane active">
+                            <div class="tip-item">
+                                <div class="icon-tip"><i class="fas fa-box-open"></i></div>
+                                <div class="text-content">
+                                    <span class="tip-title">Piliah & Pilih Aplikasi</span>
+                                    <p class="tip-explanation">Hapus aplikasi yang jarang dipakai. Nonaktifkan aplikasi bawaan yang tidak perlu.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pane 2: Penyimpanan -->
+                        <div id="pane-penyimpanan" class="tip-pane">
+                            <div class="tip-item">
+                                <div class="icon-tip"><i class="fas fa-hdd"></i></div>
+                                <div class="text-content">
+                                    <span class="tip-title">Jaga Ruang Penyimpanan</span>
+                                    <p class="tip-explanation">Sisakan ruang kosong minimal 15-20%. Pindahkan file ke cloud atau bersihkan 'sampah' secara berkala.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pane 3: Sistem -->
+                        <div id="pane-sistem" class="tip-pane">
+                             <div class="tip-item">
+                                <div class="icon-tip"><i class="fas fa-cogs"></i></div>
+                                <div class="text-content">
+                                    <span class="tip-title">Perbarui Sistem & Aplikasi</span>
+                                    <p class="tip-explanation">Update OS dan aplikasi penting untuk keamanan dan optimalisasi performa.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Pane 4: Rutin -->
+                        <div id="pane-rutin" class="tip-pane">
+                            <div class="tip-item">
+                                <div class="icon-tip"><i class="fas fa-sync-alt"></i></div>
+                                <div class="text-content">
+                                    <span class="tip-title">Restart Secara Berkala</span>
+                                    <p class="tip-explanation">Cara simpel tapi efektif! Lakukan restart ponsel setidaknya seminggu sekali.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diubah menjadi Top 3 Penyebab Lambat -->
+                 <div class="culprit-card" id="top-penyebab">
+                     <h3><i class="fas fa-exclamation-triangle"></i> Top 3 Penyebab Ponsel Lemot</h3>
+                     <ul>
+                         <li><i class="fas fa-hdd"></i>Penyimpanan Hampir Penuh</li>
+                         <li><i class="fas fa-layer-group"></i>Terlalu Banyak Aplikasi Latar Belakang</li>
+                         <li><i class="fas fa-box-open"></i>Aplikasi yang Tidak Optimal / Bloatware</li>
+                     </ul>
+                 </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Logika Segmented Control diadaptasi
+            const segmentButtons = document.querySelectorAll('.segment-btn');
+            const tipPanes = document.querySelectorAll('.tip-pane'); // Ganti nama class
+
+            segmentButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    segmentButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const targetId = button.getAttribute('data-target');
+                    tipPanes.forEach(pane => { // Ganti nama class
+                        pane.classList.remove('active');
+                    });
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+
+            // Logika Tooltip (Tetap sama)
+            const tooltipElement = document.getElementById('tooltip');
+            if (tooltipElement) {
+                const tooltippedElements = document.querySelectorAll('[data-tooltip-text]');
+                tooltippedElements.forEach(el => {
+                    el.addEventListener('mouseenter', (event) => {
+                        tooltipElement.textContent = el.getAttribute('data-tooltip-text');
+                        tooltipElement.style.display = 'block';
+                        tooltipElement.style.left = (event.pageX + 10) + 'px';
+                        tooltipElement.style.top = (event.pageY - 30) + 'px';
+                        setTimeout(() => { tooltipElement.style.opacity = '1'; }, 20);
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        tooltipElement.style.opacity = '0';
+                        setTimeout(() => { tooltipElement.style.display = 'none'; }, 200);
+                    });
+                    el.addEventListener('mousemove', (event) => {
+                        tooltipElement.style.left = (event.pageX + 10) + 'px';
+                        tooltipElement.style.top = (event.pageY - 30) + 'px';
+                    });
+                });
+            }
+
+            // Logika Dark Mode (Tetap sama)
+            const applyTheme = (theme) => {
+                if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            };
+            const savedTheme = localStorage.getItem('theme') || 'system';
+            applyTheme(savedTheme);
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!localStorage.getItem('theme')) {
+                    applyTheme('system');
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>
+
